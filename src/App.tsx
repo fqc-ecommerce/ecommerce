@@ -3,9 +3,7 @@ import "./App.css";
 function App() {
   return (
     <>
-      <p>
-        Edit <code>src/App.tsx</code> and save to test HMR
-      </p>
+      <h1 className="text-3xl font-bold underline">Hello world!</h1>
     </>
   );
 }
