@@ -6,6 +6,7 @@ import { AdminDashboardPage } from '@/features/auth/AdminDashboardPage';
 import { LoginPage } from '@/features/auth/LoginPage';
 import { OrdersHistoryPage } from '@/features/orders/OrdersHistoryPage';
 import { ProductsPage } from '@/features/products/ProductsPage';
+import { OrderDetailPage } from '@/features/orders/OrderDetailPage';
 
 export const AppRoutes = () => {
   const { user, isAdmin } = useAuth();
@@ -27,6 +28,7 @@ export const AppRoutes = () => {
           isAdmin ? <AdminDashboardPage /> : <Navigate to="/productos" />
         }
       />
+      <Route path="/ordenes/:id" element={<OrderDetailPage />} />
       <Route path="/" element={<Navigate to="/productos" replace />} />
       <Route path="*" element={<Navigate to="/productos" replace />} />
     </Routes>

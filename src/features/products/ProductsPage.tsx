@@ -14,6 +14,21 @@ export const ProductsPage = () => {
       try {
         setIsLoading(true)
         const data = await getProducts()
+        // const data = [
+        //   {
+        //     id: 1,
+        //     name: 'Producto 1',
+        //     description: 'Descripción del producto 1',
+        //     price: 10.99,
+        //     image: 'https://via.placeholder.com/150',
+        //     stock: 10,
+        //     category: 'Categoría 1',
+        //     createdByUser: {
+        //       id: 1,
+        //       name: 'Usuario 1',
+        //       email: 'N1m8K@example.com',
+        //     }
+        // }]
         setProducts(data)
       } catch (err) {
         setError('No se pudieron cargar los productos. Intenta más tarde.')
