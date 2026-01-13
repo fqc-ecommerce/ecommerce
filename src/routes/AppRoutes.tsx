@@ -1,15 +1,16 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
-import { useAuth } from '@/context/AuthContext';
+import { Routes, Route, Navigate } from 'react-router-dom'
+import { useAuth } from '@/context/AuthContext'
 
 // Importación de las páginas
-import { AdminDashboardPage } from '@/features/auth/AdminDashboardPage';
-import { LoginPage } from '@/features/auth/LoginPage';
-import { OrdersHistoryPage } from '@/features/orders/OrdersHistoryPage';
-import { ProductsPage } from '@/features/products/ProductsPage';
-import { OrderDetailPage } from '@/features/orders/OrderDetailPage';
+import { AdminDashboardPage } from '@/features/auth/AdminDashboardPage'
+import { LoginPage } from '@/features/auth/LoginPage'
+import { OrdersHistoryPage } from '@/features/orders/OrdersHistoryPage'
+import { ProductsPage } from '@/features/products/ProductsPage'
+import { OrderDetailPage } from '@/features/orders/OrderDetailPage'
+import { ProductFormPage } from '@/features/products/ProductFormPage'
 
 export const AppRoutes = () => {
-  const { user, isAdmin } = useAuth();
+  const { user, isAdmin } = useAuth()
 
   return (
     <Routes>
@@ -31,6 +32,9 @@ export const AppRoutes = () => {
       <Route path="/ordenes/:id" element={<OrderDetailPage />} />
       <Route path="/" element={<Navigate to="/productos" replace />} />
       <Route path="*" element={<Navigate to="/productos" replace />} />
+
+      <Route path="/admin/productos/nuevo" element={<ProductFormPage />} />
+      <Route path="/admin/productos/editar/:id" element={<ProductFormPage />} />
     </Routes>
-  );
-};
+  )
+}

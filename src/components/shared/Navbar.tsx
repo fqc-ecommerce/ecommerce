@@ -68,9 +68,9 @@ export const Navbar = () => {
           )}
         </div>
 
-        {/* --- BOTÓN CONDICIONAL PARA ADMIN --- */}
+        {/* Dentro de tu Navbar.tsx */}
         {isAdmin && (
-          <Link to="/admin">
+          <Link to="/admin/productos/nuevo">
             <Button
               variant="default"
               className="gap-2 bg-green-600 hover:bg-green-700"

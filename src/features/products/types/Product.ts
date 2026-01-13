@@ -5,7 +5,7 @@ export type Product = {
   price: number
   stock: number
   category: string
-  createdByUser: {
+  createdByUser?: {
     id: number
     name: string
     email: string

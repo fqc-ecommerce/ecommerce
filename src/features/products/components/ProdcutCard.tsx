@@ -1,10 +1,23 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { useAuth } from '@/context/AuthContext'
 import { useCart } from '@/context/CartContext'
 import { Button } from '@/components/ui/button'
-import { Minus, Plus, ShoppingCart, Edit } from 'lucide-react'
+import { Minus, Plus, ShoppingCart, Edit, Trash2 } from 'lucide-react'
 import type { Product } from '../types/Product'
 import { toast } from 'sonner'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog'
+import { deleteProduct } from '../services/productService'
 
 export const ProductCard = ({ product }: { product: Product }) => {
   const [quantity, setQuantity] = useState(1)
@@ -20,15 +33,60 @@ export const ProductCard = ({ product }: { product: Product }) => {
     setQuantity(1)
   }
 
+  const handleDelete = async () => {
+    try {
+      await deleteProduct(product.id)
+      toast.success('Producto eliminado permanentemente')
+      window.location.reload()
+    } catch (error) {
+      toast.error('No se pudo eliminar el producto')
+    }
+  }
+
   return (
     <div className="relative flex flex-col overflow-hidden rounded-xl border bg-white shadow-sm transition-all hover:shadow-md">
       {isAdmin && (
-        <button
-          title="Editar producto"
-          className="absolute top-2 right-2 z-10 rounded-full bg-white/90 p-2 text-blue-600 shadow-sm transition-colors hover:bg-blue-600 hover:text-white"
-        >
-          <Edit size={16} />
-        </button>
+        <div className="absolute top-2 right-2 flex gap-2">
+          <Link to={`/admin/productos/editar/${product.id}`}>
+            <Button
+              variant="outline"
+              size="icon"
+              className="h-8 w-8 border-blue-100 text-blue-600 hover:bg-blue-50"
+            >
+              <Edit size={14} />
+            </Button>
+          </Link>
+
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button
+                variant="outline"
+                size="icon"
+                className="h-8 w-8 border-red-100 bg-white/80 text-red-600 backdrop-blur-sm hover:bg-red-50"
+              >
+                <Trash2 size={14} />
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>¿Confirmas la eliminación?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  Estás a punto de borrar <strong>{product.name}</strong>. Esta
+                  acción no se puede deshacer.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                <AlertDialogAction
+                  onClick={handleDelete}
+                  className="bg-red-600 hover:bg-red-700"
+                >
+                  Sí, eliminar
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+        </div>
       )}
 
       <div className="flex h-48 items-center justify-center bg-gray-100">
@@ -58,7 +116,6 @@ export const ProductCard = ({ product }: { product: Product }) => {
             </span>
           </div>
 
-          {/* Selector de Cantidad */}
           <div className="flex items-center justify-between rounded-lg border bg-slate-50 p-1.5">
             <button
               type="button"

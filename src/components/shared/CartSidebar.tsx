@@ -22,7 +22,6 @@ export const CartSidebar = () => {
 
   return (
     <Sheet open={isCartOpen} onOpenChange={setIsCartOpen}>
-      {/* Añadimos un padding interno global con p-6 */}
       <SheetContent className="flex w-full flex-col gap-0 p-0 sm:max-w-md">
         <SheetHeader className="border-b p-6">
           <div className="flex items-center gap-3">
@@ -61,10 +60,9 @@ export const CartSidebar = () => {
                     </div>
 
                     <div className="mt-2 flex items-center justify-between">
-                      {/* CONTROLES DE CANTIDAD */}
                       <div className="flex items-center rounded-lg border bg-gray-50 px-1 py-0.5">
                         <button
-                          onClick={() => removeFromCart(item.id)} // Lógica simple: si quieres restar de a 1, habría que ajustar el context
+                          onClick={() => removeFromCart(item.id)}
                           className="p-1 transition-colors hover:text-blue-600"
                         >
                           <Minus size={14} />
