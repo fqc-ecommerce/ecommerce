@@ -90,7 +90,13 @@ export const ProductCard = ({ product }: { product: Product }) => {
       )}
 
       <div className="flex h-48 items-center justify-center bg-gray-100">
-        <span className="text-gray-400">Sin Imagen</span>
+        <span className="text-gray-400">
+          {product.imageUrl ? (
+            <img src={product.imageUrl} alt={product.name} />
+          ) : (
+            'Sin imagen'
+          )}
+        </span>
       </div>
 
       <div className="flex flex-grow flex-col p-4">

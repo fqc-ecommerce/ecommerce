@@ -5,6 +5,7 @@ export type Product = {
   price: number
   stock: number
   category: string
+  imageUrl: string
   createdByUser?: {
     id: number
     name: string
