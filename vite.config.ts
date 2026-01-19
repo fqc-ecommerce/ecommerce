@@ -13,18 +13,12 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      '/api/auth': {
-        target: 'http://localhost:8081',
+      '/auth': {
+        target: 'http://localhost:8080',
         changeOrigin: true,
       },
-      // Microservicio de Productos
-      '/api/products': {
-        target: 'http://localhost:8082',
-        changeOrigin: true,
-      },
-      // Microservicio de Órdenes (Carrito/Historial)
-      '/api/orders': {
-        target: 'http://localhost:8083',
+      '/api/': {
+        target: 'http://localhost:8080',
         changeOrigin: true,
       },
     },

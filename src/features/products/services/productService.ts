@@ -1,4 +1,4 @@
-import api from '@/api/axiosConfig'
+import { api } from '@/api/axiosConfig'
 import type { Product } from '../types/Product'
 
 export const getProducts = async (): Promise<Product[]> => {

@@ -6,6 +6,13 @@ import axios, {
 } from 'axios'
 
 // Creamos la instancia con un tipado estricto
+const auth: AxiosInstance = axios.create({
+  baseURL: '/auth',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+})
+
 const api: AxiosInstance = axios.create({
   baseURL: '/api',
   headers: {
@@ -61,4 +68,4 @@ api.interceptors.response.use(
   },
 )
 
-export default api
+export { auth, api }

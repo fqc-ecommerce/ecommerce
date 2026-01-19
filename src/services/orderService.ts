@@ -1,4 +1,5 @@
-import api from '@/api/axiosConfig'
+import { api } from "@/api/axiosConfig"
+
 
 export interface OrderItem {
   productId: number

@@ -57,10 +57,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     handleToken(token)
   }
 
-  // Importante: No uses 'as boolean' ni nada parecido aquí
-  const isAdminValue = user ? user.role === 'ADMIN' : false
+  const isAdminValue = user ? user.role === 'ROLE_ADMIN' : false
 
-  // Creamos el objeto de valor de forma explícita
   const providerValue: AuthContextType = {
     user: user,
     isAdmin: isAdminValue,

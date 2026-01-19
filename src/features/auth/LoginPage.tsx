@@ -2,7 +2,7 @@ import { useState, type FormEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '@/context/AuthContext'
 import { Button } from '@/components/ui/button'
-import api from '@/api/axiosConfig'
+import { auth } from '@/api/axiosConfig'
 import { toast } from 'sonner'
 
 export const LoginPage = () => {
@@ -13,17 +13,16 @@ export const LoginPage = () => {
   const { login } = useAuth()
   const navigate = useNavigate()
 
-  const handleSubmit_ = async (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
 
     try {
-      const response = await api.post('/auth/login', {
+      const response = await auth.post('/login', {
         email,
         password,
       })
 
-      // 2. Extraer el token (asumiendo que Java responde { "token": "ey..." })
       const { token } = response.data
       login(token)
 
@@ -36,24 +35,6 @@ export const LoginPage = () => {
     } finally {
       setIsLoading(false)
     }
-  }
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsLoading(true)
-
-    // Simulamos el retraso de la red
-    setTimeout(() => {
-      const fakeToken =
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwic3ViIjoiQWRtaW4gR2VuZXJhbCIsInJvbGUiOiJBRE1JTiIsImV4cCI6MTkwMDAwMDAwMH0.S_p8W_P6D2_2u5L0R0_7X8_9_0_1_2_3_4_5_6_7_8_9_0'
-
-      // Al llamar a login, el contexto decodifica el 'sub' y el 'role'
-      login(fakeToken)
-
-      toast.success('Sesión iniciada como ADMIN')
-      navigate('/productos')
-      setIsLoading(false)
-    }, 800)
   }
 
   return (
