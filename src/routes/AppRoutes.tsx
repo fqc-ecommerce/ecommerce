@@ -1,13 +1,12 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
-import { useAuth } from '@/context/AuthContext'
+import { useAuth } from '@/providers/AuthProvider'
 
-// Importación de las páginas
-import { AdminDashboardPage } from '@/features/auth/AdminDashboardPage'
-import { LoginPage } from '@/features/auth/LoginPage'
-import { OrdersHistoryPage } from '@/features/orders/OrdersHistoryPage'
-import { ProductsPage } from '@/features/products/ProductsPage'
-import { OrderDetailPage } from '@/features/orders/OrderDetailPage'
-import { ProductFormPage } from '@/features/products/ProductFormPage'
+import { AdminDashboardPage } from '@/features/auth/routes/AdminDashboardPage'
+import { LoginPage } from '@/features/auth/routes/LoginPage'
+import { OrdersHistoryPage } from '@/features/orders/routes/OrdersHistoryPage'
+import { ProductsPage } from '@/features/products/routes/ProductsPage'
+import { OrderDetailPage } from '@/features/orders/routes/OrderDetailPage'
+import { ProductFormPage } from '@/features/products/routes/ProductFormPage'
 
 export const AppRoutes = () => {
   const { user, isAdmin } = useAuth()

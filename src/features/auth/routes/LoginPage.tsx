@@ -1,9 +1,9 @@
 import { useState, type FormEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useAuth } from '@/context/AuthContext'
+import { useAuth } from '@/providers/AuthProvider'
 import { Button } from '@/components/ui/button'
-import { auth } from '@/api/axiosConfig'
 import { toast } from 'sonner'
+import { loginRequest } from '../api/loginRequest'
 
 export const LoginPage = () => {
   const [email, setEmail] = useState('')
@@ -18,11 +18,7 @@ export const LoginPage = () => {
     setIsLoading(true)
 
     try {
-      const response = await auth.post('/login', {
-        email,
-        password,
-      })
-
+      const response = await loginRequest({ email, password })
       const { token } = response.data
       login(token)
 

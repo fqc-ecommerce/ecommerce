@@ -1,4 +1,4 @@
-import type { Product } from '@/features/products/types/Product'
+import type { Product } from '@/features/products/types'
 import { createContext, useContext, useState, type ReactNode } from 'react'
 
 interface CartItem extends Product {

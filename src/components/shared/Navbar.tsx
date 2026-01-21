@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom'
-import { useAuth } from '@/context/AuthContext'
-import { useCart } from '@/context/CartContext' // 1. Importar el hook del carrito
+import { useAuth } from '@/providers/AuthProvider'
+import { useCart } from '@/providers/CartProvider' // 1. Importar el hook del carrito
 import { Button } from '@/components/ui/button'
 import {
   PlusCircle,
@@ -41,15 +41,13 @@ export const Navbar = () => {
               to="/ordenes"
               className="transition-colors hover:text-blue-600"
             >
-              Mis Pedidos
+              Pedidos
             </Link>
           )}
         </div>
       </div>
 
-      {/* Lado Derecho: Acciones de Usuario y Admin */}
       <div className="flex items-center gap-4">
-        {/* --- BOTÓN DE CARRITO CON BADGE --- */}
         <div className="relative mr-2">
           <Button
             variant="ghost"
@@ -60,7 +58,6 @@ export const Navbar = () => {
             <ShoppingCart size={22} />
           </Button>
 
-          {/* Badge dinámico */}
           {totalItems > 0 && (
             <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full border-2 border-white bg-red-600 text-[10px] font-bold text-white">
               {totalItems}
@@ -68,7 +65,6 @@ export const Navbar = () => {
           )}
         </div>
 
-        {/* Dentro de tu Navbar.tsx */}
         {isAdmin && (
           <Link to="/admin/productos/nuevo">
             <Button
@@ -85,7 +81,6 @@ export const Navbar = () => {
 
         {user ? (
           <div className="flex items-center gap-5">
-            {/* NOMBRE DEL USUARIO */}
             <div className="flex items-center gap-2 text-sm">
               <div className="rounded-full bg-blue-100 p-2 text-blue-600">
                 <UserIcon size={16} />

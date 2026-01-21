@@ -1,16 +1,5 @@
-import { api } from "@/api/axiosConfig"
-
-
-export interface OrderItem {
-  productId: number
-  quantity: number
-  price: number
-}
-
-export interface OrderRequest {
-  items: OrderItem[]
-  total: number
-}
+import { api } from '@/lib/axiosConfig'
+import type { OrderRequest } from '../types'
 
 export const createOrder = async (orderData: OrderRequest) => {
   const response = await api.post('/orders', orderData)

@@ -1,5 +1,5 @@
 import { useLocation, Link } from 'react-router-dom'
-import type { Order } from './types/Order'
+import type { Order } from '../types'
 import { Button } from '@/components/ui/button'
 import { ArrowLeft } from 'lucide-react'
 
@@ -28,7 +28,6 @@ export const OrderDetailPage = () => {
         </Button>
       </Link>
 
-      {/* Título y Estado usando los datos de 'order' */}
       <div className="mb-8 flex items-center justify-between">
         <h1 className="text-3xl font-black italic">
           PEDIDO {order.orderNumber}
@@ -38,7 +37,6 @@ export const OrderDetailPage = () => {
         </div>
       </div>
 
-      {/* Tabla de Productos usando order.items */}
       <div className="overflow-hidden rounded-xl border bg-white shadow-sm">
         <div className="border-b bg-slate-50 p-4 text-sm font-bold text-slate-500 uppercase">
           Resumen de Productos

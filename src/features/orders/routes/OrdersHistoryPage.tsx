@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent } from '@/components/ui/card'
 import { Package, ChevronRight } from 'lucide-react'
-import type { Order } from './types/Order'
-import { getUserOrders } from '@/services/orderService'
+import { getUserOrders } from '@/features/orders/api/getUserOrders'
+import type { Order } from '../types'
 
 export const OrdersHistoryPage = () => {
   const [orders, setOrders] = useState<Order[]>([])

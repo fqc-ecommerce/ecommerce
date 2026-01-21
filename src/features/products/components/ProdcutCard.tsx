@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useAuth } from '@/context/AuthContext'
-import { useCart } from '@/context/CartContext'
+import { useAuth } from '@/providers/AuthProvider'
+import { useCart } from '@/providers/CartProvider'
 import { Button } from '@/components/ui/button'
 import { Minus, Plus, ShoppingCart, Edit, Trash2 } from 'lucide-react'
-import type { Product } from '../types/Product'
+import type { Product } from '../types'
 import { toast } from 'sonner'
 import {
   AlertDialog,
@@ -17,7 +17,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
-import { deleteProduct } from '../services/productService'
+import { deleteProduct } from '../api/deleteProduct'
 
 export const ProductCard = ({ product }: { product: Product }) => {
   const [quantity, setQuantity] = useState(1)
@@ -28,7 +28,6 @@ export const ProductCard = ({ product }: { product: Product }) => {
     if (product.stock === 0) return
 
     addToCart(product, quantity)
-
     toast.success(`${product.name} añadido al carrito`)
     setQuantity(1)
   }
@@ -44,14 +43,14 @@ export const ProductCard = ({ product }: { product: Product }) => {
   }
 
   return (
-    <div className="relative flex flex-col overflow-hidden rounded-xl border bg-white shadow-sm transition-all hover:shadow-md">
+    <div className="relative flex flex-col overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm transition-all hover:shadow-md">
       {isAdmin && (
-        <div className="absolute top-2 right-2 flex gap-2">
+        <div className="absolute top-2 right-2 z-10 flex gap-2">
           <Link to={`/admin/productos/editar/${product.id}`}>
             <Button
               variant="outline"
               size="icon"
-              className="h-8 w-8 border-blue-100 text-blue-600 hover:bg-blue-50"
+              className="h-8 w-8 border-blue-100 bg-white/90 text-blue-600 backdrop-blur-sm hover:bg-blue-50"
             >
               <Edit size={14} />
             </Button>
@@ -62,7 +61,7 @@ export const ProductCard = ({ product }: { product: Product }) => {
               <Button
                 variant="outline"
                 size="icon"
-                className="h-8 w-8 border-red-100 bg-white/80 text-red-600 backdrop-blur-sm hover:bg-red-50"
+                className="h-8 w-8 border-red-100 bg-white/90 text-red-600 backdrop-blur-sm hover:bg-red-50"
               >
                 <Trash2 size={14} />
               </Button>
@@ -89,55 +88,72 @@ export const ProductCard = ({ product }: { product: Product }) => {
         </div>
       )}
 
-      <div className="flex h-48 items-center justify-center bg-gray-100">
-        <span className="text-gray-400">
-          {product.imageUrl ? (
-            <img src={product.imageUrl} alt={product.name} />
-          ) : (
-            'Sin imagen'
-          )}
-        </span>
+      <div className="relative h-[200px] w-full overflow-hidden border-b border-slate-100 bg-slate-50">
+        {product.imageUrl ? (
+          <img
+            src={product.imageUrl}
+            alt={product.name}
+            // Eliminamos todas las clases de transform y scale
+            className="h-full w-full object-cover"
+          />
+        ) : (
+          <div className="flex h-full w-full items-center justify-center text-xs font-medium text-slate-400">
+            Sin imagen
+          </div>
+        )}
+
+        {product.stock === 0 && (
+          <div className="absolute inset-0 flex items-center justify-center bg-white/40 backdrop-blur-[1px]">
+            <span className="rounded-full bg-red-600 px-3 py-1 text-[10px] font-bold text-white uppercase shadow-sm">
+              Agotado
+            </span>
+          </div>
+        )}
       </div>
 
       <div className="flex flex-grow flex-col p-4">
         <div className="mb-2">
-          <span className="text-[10px] font-bold text-gray-400 uppercase">
-            {product.category}
-          </span>
-          <h3 className="line-clamp-1 text-lg font-bold text-gray-800">
+          <div className="flex items-center justify-between">
+            <span className="text-[10px] font-bold tracking-wider text-blue-600 uppercase">
+              {product.category}
+            </span>
+          </div>
+          <h3 className="line-clamp-1 text-lg font-bold text-slate-800">
             {product.name}
           </h3>
-          <p className="line-clamp-2 h-8 text-xs text-gray-500">
+          <p className="line-clamp-2 h-8 text-xs leading-relaxed text-slate-500">
             {product.description}
           </p>
         </div>
 
         <div className="mt-auto space-y-3 pt-4">
           <div className="flex items-end justify-between">
-            <span className="text-2xl font-black text-blue-600">
+            <span className="text-2xl font-black text-slate-900">
               ${product.price}
             </span>
-            <span className="text-[10px] text-gray-400">
+            <span
+              className={`text-[10px] font-bold ${product.stock < 5 ? 'text-orange-500' : 'text-slate-400'}`}
+            >
               Stock: {product.stock}
             </span>
           </div>
 
-          <div className="flex items-center justify-between rounded-lg border bg-slate-50 p-1.5">
+          <div className="flex items-center justify-between rounded-lg border border-slate-100 bg-slate-50/50 p-1">
             <button
               type="button"
               onClick={() => setQuantity(Math.max(1, quantity - 1))}
-              className="rounded p-1 hover:bg-gray-200 disabled:opacity-30"
+              className="flex h-7 w-7 items-center justify-center rounded-md transition-colors hover:bg-white hover:shadow-sm disabled:opacity-30"
               disabled={product.stock === 0}
             >
               <Minus size={14} />
             </button>
-            <span className="text-sm font-bold">
+            <span className="text-sm font-bold text-slate-700">
               {product.stock === 0 ? 0 : quantity}
             </span>
             <button
               type="button"
               onClick={() => setQuantity(Math.min(product.stock, quantity + 1))}
-              className="rounded p-1 hover:bg-gray-200 disabled:opacity-30"
+              className="flex h-7 w-7 items-center justify-center rounded-md transition-colors hover:bg-white hover:shadow-sm disabled:opacity-30"
               disabled={product.stock === 0}
             >
               <Plus size={14} />
@@ -146,16 +162,15 @@ export const ProductCard = ({ product }: { product: Product }) => {
 
           <Button
             onClick={handleAddToCart}
-            // Solo habilitado si hay usuario y hay stock
             disabled={!user || product.stock === 0}
-            className="w-full gap-2 transition-transform active:scale-95"
+            className="w-full gap-2 shadow-sm transition-all active:scale-95 disabled:bg-slate-100 disabled:text-slate-400"
           >
             <ShoppingCart size={18} />
             {!user
               ? 'Inicia Sesión'
               : product.stock > 0
-                ? 'Añadir'
-                : 'Sin Stock'}
+                ? 'Añadir al carrito'
+                : 'Agotado'}
           </Button>
         </div>
       </div>

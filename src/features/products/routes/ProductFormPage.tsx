@@ -9,15 +9,18 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
 import { Package, Save, ArrowLeft, Loader2, ImagePlus, X } from 'lucide-react'
 import { toast } from 'sonner'
-import {
-  getProductById,
-  saveProduct,
-  updateProduct,
-  uploadToImgBB,
-} from './services/productService'
+import { getProductById } from '../api/getProductById'
+import { uploadToImgBB } from '../api/uploadToImgBB'
+import { updateProduct } from '../api/updateProduct'
+import { saveProduct } from '../api/saveProduct'
 
 export const ProductFormPage = () => {
   const { id } = useParams()

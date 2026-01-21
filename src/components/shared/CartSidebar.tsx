@@ -1,4 +1,4 @@
-import { useCart } from '@/context/CartContext'
+import { useCart } from '@/providers/CartProvider'
 import {
   Sheet,
   SheetContent,
@@ -37,13 +37,10 @@ export const CartSidebar = () => {
             <div className="flex flex-col gap-6 py-6">
               {items.map((item) => (
                 <div key={item.id} className="group flex gap-4">
-                  {/* ÁREA DE IMAGEN */}
                   <div className="flex h-20 w-20 flex-shrink-0 items-center justify-center overflow-hidden rounded-md border border-gray-200 bg-gray-50">
-                    {/* Cuando tengas URLs de imagen, usas <img />, mientras tanto un placeholder */}
                     <Package className="h-8 w-8 text-gray-300" />
                   </div>
 
-                  {/* INFO DEL PRODUCTO */}
                   <div className="flex flex-1 flex-col justify-between py-0.5">
                     <div>
                       <div className="flex items-start justify-between">
@@ -112,7 +109,6 @@ export const CartSidebar = () => {
           )}
         </ScrollArea>
 
-        {/* FOOTER CON MARGENES Y DISEÑO LIMPIO */}
         {items.length > 0 && (
           <SheetFooter className="mt-auto flex-col gap-4 border-t bg-gray-50/50 p-6">
             <div className="w-full space-y-1.5">

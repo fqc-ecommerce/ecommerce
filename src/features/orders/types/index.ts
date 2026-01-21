@@ -5,6 +5,10 @@ export type OrderStatus =
   | 'DELIVERED'
   | 'CANCELLED'
 
+export interface OrderRequest {
+  items: OrderItem[]
+  total: number
+}
 export type OrderItem = {
   id: number
   product: {
