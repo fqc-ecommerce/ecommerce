@@ -38,7 +38,15 @@ export const CartSidebar = () => {
               {items.map((item) => (
                 <div key={item.id} className="group flex gap-4">
                   <div className="flex h-20 w-20 flex-shrink-0 items-center justify-center overflow-hidden rounded-md border border-gray-200 bg-gray-50">
-                    <Package className="h-8 w-8 text-gray-300" />
+                    {item.imageUrl ? (
+                      <img
+                        src={item.imageUrl}
+                        alt={item.name}
+                        className="h-full w-full object-contain"
+                      />
+                    ) : (
+                      <Package className="text-gray-200" size={40} />
+                    )}
                   </div>
 
                   <div className="flex flex-1 flex-col justify-between py-0.5">

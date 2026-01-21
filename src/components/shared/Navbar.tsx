@@ -86,7 +86,7 @@ export const Navbar = () => {
                 <UserIcon size={16} />
               </div>
               <span className="font-semibold text-gray-700">
-                {user.name}
+                {user.email}
                 {isAdmin && (
                   <span className="ml-2 rounded bg-red-100 px-1.5 py-0.5 text-[10px] text-red-600 uppercase">
                     Admin

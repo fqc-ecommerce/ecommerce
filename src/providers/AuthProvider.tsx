@@ -1,3 +1,4 @@
+import type { User } from '@/features/auth/types'
 import { jwtDecode } from 'jwt-decode'
 import {
   createContext,
@@ -6,7 +7,6 @@ import {
   useState,
   type ReactNode,
 } from 'react'
-import { type User } from '@/types'
 
 interface AuthContextType {
   user: User | null
@@ -35,7 +35,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
       const userData: User = {
         id: decoded.id,
-        name: decoded.sub || decoded.email,
+        email: decoded.sub || decoded.email,
         role: decoded.role,
       }
 
