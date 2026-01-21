@@ -11,7 +11,7 @@ import {
 
 export const Navbar = () => {
   const { user, isAdmin, logout } = useAuth()
-  const { totalItems, setIsCartOpen } = useCart() // 3. Extraer estado del carrito
+  const { totalItems, setIsCartOpen } = useCart()
   const navigate = useNavigate()
 
   const handleLogout = () => {

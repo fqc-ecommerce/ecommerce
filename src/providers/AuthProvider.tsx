@@ -34,7 +34,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       const decoded = jwtDecode<any>(token)
 
       const userData: User = {
-        id: decoded.id,
+        id: decoded.userId,
         email: decoded.sub || decoded.email,
         role: decoded.role,
       }

@@ -9,6 +9,9 @@ import {
 import { Button } from '@/components/ui/button'
 import { ShoppingCart, Trash2, Plus, Minus, Package } from 'lucide-react'
 import { ScrollArea } from '@/components/ui/scroll-area'
+import { createOrder } from '@/features/orders/api/createOrder'
+import { toast } from 'sonner'
+import { useAuth } from '@/providers/AuthProvider'
 
 export const CartSidebar = () => {
   const {
@@ -18,7 +21,35 @@ export const CartSidebar = () => {
     removeFromCart,
     addToCart,
     totalPrice,
+    clearCart,
   } = useCart()
+
+  const { user } = useAuth()
+
+  const handleCheckout = async () => {
+    if (!user) {
+      toast.error('Debes iniciar sesión para realizar tu pedido')
+      return
+    }
+
+    const itemsRequest = items.map((item) => ({
+      productId: item.id,
+      quantity: item.quantity,
+    }))
+
+    const orderRequest = {
+      userId: user.id,
+      items: itemsRequest,
+    }
+
+    try {
+      await createOrder(orderRequest)
+      toast.success('¡Orden realizada con éxito!')
+      clearCart()
+    } catch (error) {
+      toast.error('Hubo un error al procesar tu pedido')
+    }
+  }
 
   return (
     <Sheet open={isCartOpen} onOpenChange={setIsCartOpen}>
@@ -136,7 +167,10 @@ export const CartSidebar = () => {
               </div>
             </div>
 
-            <Button className="text-md h-12 w-full bg-blue-600 font-bold shadow-lg shadow-blue-200 transition-all hover:bg-blue-700 active:scale-[0.98]">
+            <Button
+              onClick={handleCheckout}
+              className="text-md h-12 w-full bg-blue-600 font-bold shadow-lg shadow-blue-200 transition-all hover:bg-blue-700 active:scale-[0.98]"
+            >
               Confirmar pedido
             </Button>
 
