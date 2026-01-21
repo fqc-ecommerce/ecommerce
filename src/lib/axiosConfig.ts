@@ -1,3 +1,4 @@
+import { API_URL, AUTH_URL } from '@/config'
 import axios, {
   type AxiosInstance,
   type InternalAxiosRequestConfig,
@@ -7,14 +8,14 @@ import axios, {
 
 // Creamos la instancia con un tipado estricto
 const auth: AxiosInstance = axios.create({
-  baseURL: '/auth',
+  baseURL: AUTH_URL,
   headers: {
     'Content-Type': 'application/json',
   },
 })
 
 const api: AxiosInstance = axios.create({
-  baseURL: '/api',
+  baseURL: API_URL,
   headers: {
     'Content-Type': 'application/json',
   },
