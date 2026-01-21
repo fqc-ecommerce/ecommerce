@@ -1,6 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '@/providers/AuthProvider'
-import { useCart } from '@/providers/CartProvider' // 1. Importar el hook del carrito
 import { Button } from '@/components/ui/button'
 import {
   PlusCircle,
@@ -8,10 +7,11 @@ import {
   User as UserIcon,
   ShoppingCart,
 } from 'lucide-react' // 2. Importar ShoppingCart
+import { useCartStore } from '@/stores/useCartStore'
 
 export const Navbar = () => {
   const { user, isAdmin, logout } = useAuth()
-  const { totalItems, setIsCartOpen } = useCart()
+  const { getTotalItems: totalItems, setIsCartOpen } = useCartStore()
   const navigate = useNavigate()
 
   const handleLogout = () => {
@@ -58,9 +58,9 @@ export const Navbar = () => {
             <ShoppingCart size={22} />
           </Button>
 
-          {totalItems > 0 && (
+          {totalItems() > 0 && (
             <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full border-2 border-white bg-red-600 text-[10px] font-bold text-white">
-              {totalItems}
+              {totalItems()}
             </span>
           )}
         </div>

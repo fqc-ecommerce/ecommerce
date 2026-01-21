@@ -1,4 +1,3 @@
-import { useCart } from '@/providers/CartProvider'
 import {
   Sheet,
   SheetContent,
@@ -12,6 +11,7 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import { createOrder } from '@/features/orders/api/createOrder'
 import { toast } from 'sonner'
 import { useAuth } from '@/providers/AuthProvider'
+import { useCartStore } from '@/stores/useCartStore'
 
 export const CartSidebar = () => {
   const {
@@ -20,9 +20,9 @@ export const CartSidebar = () => {
     setIsCartOpen,
     removeFromCart,
     addToCart,
-    totalPrice,
+    getTotalPrice: totalPrice,
     clearCart,
-  } = useCart()
+  } = useCartStore()
 
   const { user } = useAuth()
 
@@ -153,7 +153,7 @@ export const CartSidebar = () => {
             <div className="w-full space-y-1.5">
               <div className="flex justify-between text-sm text-gray-600">
                 <span>Subtotal</span>
-                <span>${totalPrice.toFixed(2)}</span>
+                <span>${totalPrice().toFixed(2)}</span>
               </div>
               <div className="flex justify-between text-sm text-gray-600">
                 <span>Impuestos (estimado)</span>
@@ -162,7 +162,7 @@ export const CartSidebar = () => {
               <div className="flex justify-between pt-2 text-base font-black text-gray-900">
                 <span>Total</span>
                 <span className="text-xl text-blue-600">
-                  ${totalPrice.toFixed(2)}
+                  ${totalPrice().toFixed(2)}
                 </span>
               </div>
             </div>

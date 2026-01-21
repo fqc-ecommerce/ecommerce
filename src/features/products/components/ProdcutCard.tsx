@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '@/providers/AuthProvider'
-import { useCart } from '@/providers/CartProvider'
 import { Button } from '@/components/ui/button'
 import { Minus, Plus, ShoppingCart, Edit, Trash2 } from 'lucide-react'
 import type { Product } from '../types'
@@ -18,11 +17,12 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
 import { deleteProduct } from '../api/deleteProduct'
+import { useCartStore } from '@/stores/useCartStore'
 
 export const ProductCard = ({ product }: { product: Product }) => {
   const [quantity, setQuantity] = useState(1)
   const { user, isAdmin } = useAuth()
-  const { addToCart } = useCart()
+  const { addToCart } = useCartStore()
 
   const handleAddToCart = () => {
     if (product.stock === 0) return
