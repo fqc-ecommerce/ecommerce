@@ -9,18 +9,14 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Package, Save, ArrowLeft, Loader2, ImagePlus, X } from 'lucide-react'
 import { toast } from 'sonner'
 import { getProductById } from '../api/getProductById'
 import { uploadToImgBB } from '../api/uploadToImgBB'
 import { updateProduct } from '../api/updateProduct'
 import { saveProduct } from '../api/saveProduct'
+import { useAuth } from '@/providers/AuthProvider'
 
 export const ProductFormPage = () => {
   const { id } = useParams()
@@ -30,6 +26,8 @@ export const ProductFormPage = () => {
   const [loading, setLoading] = useState(false)
   const [uploadingImage, setUploadingImage] = useState(false)
   const [imagePreview, setImagePreview] = useState<string | null>(null)
+
+  const { user } = useAuth()
 
   const [formData, setFormData] = useState({
     name: '',
@@ -98,7 +96,17 @@ export const ProductFormPage = () => {
         await updateProduct(Number(id), payload)
         toast.success('Producto actualizado con éxito')
       } else {
-        await saveProduct(payload)
+        if (!user?.id) {
+          toast.error('Usuario no autenticado')
+          return
+        }
+        const payloadCreate = {
+          ...payload,
+          createdByUser: {
+            id: user.id,
+          },
+        }
+        await saveProduct(payloadCreate)
         toast.success('Producto creado con éxito')
       }
       navigate('/productos')

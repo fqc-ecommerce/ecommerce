@@ -11,8 +11,6 @@ import { ProductFormPage } from '@/features/products/routes/ProductFormPage'
 export const AppRoutes = () => {
   const { user, isAdmin } = useAuth()
 
-  console.log(user, isAdmin)
-
   return (
     <Routes>
       <Route path="/productos" element={<ProductsPage />} />

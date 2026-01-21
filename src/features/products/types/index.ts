@@ -8,7 +8,7 @@ export type Product = {
   imageUrl: string
   createdByUser?: {
     id: number
-    name: string
-    email: string
+    name?: string
+    email?: string
   }
 }
