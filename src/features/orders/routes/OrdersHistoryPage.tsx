@@ -5,14 +5,17 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Package, ChevronRight } from 'lucide-react'
 import { getUserOrders } from '@/features/orders/api/getUserOrders'
 import type { Order } from '../types'
+import { useAuth } from '@/providers/AuthProvider'
 
 export const OrdersHistoryPage = () => {
   const [orders, setOrders] = useState<Order[]>([])
+  const { user } = useAuth()
 
   useEffect(() => {
-    getUserOrders().then(setOrders)
-  }, [])
-
+    if (user) {
+      getUserOrders(user.id).then(setOrders)
+    }
+  }, [user])
   const getStatusColor = (status: string) => {
     if (status === 'CONFIRMED')
       return 'bg-green-100 text-green-700 border-green-200'
