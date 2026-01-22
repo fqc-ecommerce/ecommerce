@@ -35,7 +35,6 @@ export const Navbar = () => {
             SHOP.IO
           </Link>
 
-          {/* Nav Desktop - Oculto en móvil */}
           <div className="hidden items-center gap-6 text-sm font-medium text-gray-600 md:flex">
             <Link
               to="/productos"
@@ -55,7 +54,6 @@ export const Navbar = () => {
         </div>
 
         <div className="flex items-center gap-2 md:gap-4">
-          {/* Carrito - Siempre visible */}
           <div className="relative mr-2">
             <Button
               variant="ghost"
@@ -73,7 +71,6 @@ export const Navbar = () => {
             )}
           </div>
 
-          {/* UI Desktop - Oculta en móvil */}
           <div className="hidden items-center gap-4 md:flex">
             {isAdmin && (
               <Link to="/admin/productos/nuevo">
@@ -120,7 +117,6 @@ export const Navbar = () => {
             )}
           </div>
 
-          {/* Botón Hamburguesa - Solo móvil */}
           <Button
             variant="ghost"
             size="icon"
@@ -132,7 +128,6 @@ export const Navbar = () => {
         </div>
       </div>
 
-      {/* MENÚ MÓVIL DESPLEGABLE */}
       {isMobileMenuOpen && (
         <div className="animate-in fade-in slide-in-from-top-2 absolute top-full left-0 z-50 w-full border-b bg-white px-6 py-6 shadow-xl md:hidden">
           <div className="flex flex-col gap-6">
@@ -158,7 +153,6 @@ export const Navbar = () => {
                   </span>
                 </div>
 
-                {/* Acciones móviles sutiles (Sin botones toscos) */}
                 <div className="flex flex-col gap-4 pl-1">
                   {isAdmin && (
                     <Link

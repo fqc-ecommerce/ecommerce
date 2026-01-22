@@ -93,7 +93,6 @@ export const ProductCard = ({ product }: { product: Product }) => {
           <img
             src={product.imageUrl}
             alt={product.name}
-            // Eliminamos todas las clases de transform y scale
             className="h-full w-full object-cover"
           />
         ) : (

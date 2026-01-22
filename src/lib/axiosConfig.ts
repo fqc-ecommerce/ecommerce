@@ -51,7 +51,6 @@ api.interceptors.response.use(
     if (error.response) {
       switch (error.response.status) {
         case 401:
-          // El token expiró o es inválido
           console.error('No autorizado - Redirigiendo al login')
           localStorage.removeItem('token')
           window.location.href = '/login'

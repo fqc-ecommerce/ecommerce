@@ -1,4 +1,3 @@
-// src/stores/useCartStore.ts
 import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'
 import type { Product } from '@/features/products/types'
@@ -57,7 +56,7 @@ export const useCartStore = create<CartState>()(
       getTotalPrice: () => get().items.reduce((acc, item) => acc + item.price * item.quantity, 0),
     }),
     {
-      name: 'cart-storage', // Nombre de la llave en localStorage
+      name: 'cart-storage',
       storage: createJSONStorage(() => localStorage), 
     }
   )

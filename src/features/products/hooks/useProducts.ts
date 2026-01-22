@@ -6,8 +6,6 @@ export const useProducts = () => {
   const [allProducts, setAllProducts] = useState<Product[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const [currentPage, setCurrentPage] = useState(1)
-  const itemsPerPage = 12
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -25,18 +23,9 @@ export const useProducts = () => {
     fetchProducts()
   }, [])
 
-  const lastIndex = currentPage * itemsPerPage
-  const firstIndex = lastIndex - itemsPerPage
-
-  const currentProducts = allProducts.slice(firstIndex, lastIndex)
-  const totalPages = Math.ceil(allProducts.length / itemsPerPage)
-
   return {
-    products: currentProducts,
+    allProducts,
     isLoading,
     error,
-    currentPage,
-    setCurrentPage,
-    totalPages,
   }
 }
