@@ -12,6 +12,9 @@ import { createOrder } from '@/features/orders/api/createOrder'
 import { toast } from 'sonner'
 import { useAuth } from '@/providers/AuthProvider'
 import { useCartStore } from '@/stores/useCartStore'
+import { generateWhatsAppMessage } from '@/utils/whatsappHelper'
+import type { OrderVoucher } from '@/types'
+import { useState } from 'react'
 
 export const CartSidebar = () => {
   const {
@@ -25,6 +28,15 @@ export const CartSidebar = () => {
   } = useCartStore()
 
   const { user } = useAuth()
+
+  const [orden, setOrden] = useState<OrderVoucher | null>(null)
+
+  const sendWhatsAppMessage = (orden: OrderVoucher) => {
+    const message = generateWhatsAppMessage(orden)
+    const phoneNumber = '51966419018'
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`
+    window.open(whatsappUrl, '_blank')
+  }
 
   const handleCheckout = async () => {
     if (!user) {
@@ -41,9 +53,9 @@ export const CartSidebar = () => {
       userId: user.id,
       items: itemsRequest,
     }
-
     try {
-      await createOrder(orderRequest)
+      const orden = await createOrder(orderRequest)
+      setOrden(orden)
       toast.success('¡Orden realizada con éxito!')
       clearCart()
     } catch (error) {
@@ -144,6 +156,15 @@ export const CartSidebar = () => {
               >
                 Volver a la tienda
               </Button>
+              {orden && (
+                <Button
+                  variant="outline"
+                  className="mt-2 border-blue-600 text-blue-600 hover:bg-blue-50"
+                  onClick={() => sendWhatsAppMessage(orden)}
+                >
+                  Enviar Orden por WhatsApp
+                </Button>
+              )}
             </div>
           )}
         </ScrollArea>
