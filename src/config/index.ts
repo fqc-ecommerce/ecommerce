@@ -1,5 +1,11 @@
-export const BASE_URL =
-  import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080'
+export const BASE_URL = import.meta.env.VITE_API_GATEWAY_URL
 
-export const API_URL = import.meta.env.VITE_API_BASE_URL || '/apiX'
-export const AUTH_URL = import.meta.env.VITE_AUTH_BASE_URL || '/authX'
+let AUTH_URL = `${BASE_URL}/auth`
+let API_URL = `${BASE_URL}/api`
+
+if (BASE_URL == 'DEV') {
+  AUTH_URL = '/auth'
+  API_URL = '/api' 
+}
+
+export { AUTH_URL, API_URL }

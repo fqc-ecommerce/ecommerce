@@ -19,11 +19,11 @@ export default defineConfig(({ mode }) => {
     server: {
       proxy: {
         '/auth': {
-          target: env.VITE_API_GATEWAY_URL,
+          target: env.VITE_SERVER_PROXY_DEV,
           changeOrigin: true,
         },
         '/api/': {
-          target: env.VITE_API_GATEWAY_URL,
+          target: env.VITE_SERVER_PROXY_DEV,
           changeOrigin: true,
         },
       },
