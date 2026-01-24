@@ -104,4 +104,17 @@ Este proyecto está bajo la Licencia MIT. Consulta el archivo [LICENSE](LICENSE)
 
 ---
 
+##  Arquitectura del Proyecto
+Arquitectura basada en las buenas practicas de:
+- [Bulletproof React](https://github.com/alan2207/bulletproof-react)
+
+## Link de la aplicacion en vercel:
+- https://ecommerce-nine-xi-39.vercel.app/
+
+## 📦 Mocks
+nota: usando servivio de mocks de [beeceptor](https://beeceptor.com/) para emular en produccion.
+```
+Login: admin@ecom.com
+Password: admin123
+```
 Desarrollado con ❤️ por [Franco Queirolo](https://github.com/francoqueirolo)
