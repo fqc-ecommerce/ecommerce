@@ -116,5 +116,5 @@ nota: usando servivio de mocks de [beeceptor](https://beeceptor.com/) para emula
 ```
 Login: admin@ecom.com
 Password: admin123
-```
+```z
 Desarrollado con ❤️ por [Franco Queirolo](https://github.com/francoqueirolo)
